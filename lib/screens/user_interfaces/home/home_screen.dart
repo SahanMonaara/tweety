@@ -38,6 +38,7 @@ class _HomeViewState extends BaseViewState {
   @override
   void initState() {
     super.initState();
+
     /// Get the existing ID of the collection
     getIdFromShared();
   }
@@ -51,7 +52,8 @@ class _HomeViewState extends BaseViewState {
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder(
-            ///Listening the collection
+
+          ///Listening the collection
             stream: FirebaseFirestore.instance.collection('tweets').snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -64,7 +66,6 @@ class _HomeViewState extends BaseViewState {
                   child: Text('Something is Wrong!!'),
                 );
               } else if (snapshot.hasData) {
-
                 return CommonBackgroundComponent(
                   bottomSheetHeight: 780,
                   profile: true,
@@ -73,81 +74,84 @@ class _HomeViewState extends BaseViewState {
                   email: user.email!,
                   children: [
                     snapshot.data!.docs.length == 0
+
                     ///No data in the collection
                         ? Positioned(
-                            top: adaptiveScreen.setHeight(300),
-                            child: Container(
-                              width: adaptiveScreen.setWidth(428),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height:adaptiveScreen.setHeight(300) ,
-                                      width: adaptiveScreen.setWidth(400),
-                                      child: Image.asset(AppImages.noTweets)),
-                                  Text(
-                                    "Uh oh, Seems like there is no any message for you",
-                                    style: TextStyle(
-                                      fontSize: adaptiveScreen.setSp(16),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
+                      top: adaptiveScreen.setHeight(300),
+                      child: Container(
+                        width: adaptiveScreen.setWidth(428),
+                        child: Column(
+                          children: [
+                            Container(
+                                height: adaptiveScreen.setHeight(300),
+                                width: adaptiveScreen.setWidth(400),
+                                child: Image.asset(AppImages.noTweets)),
+                            Text(
+                              "Uh oh, Seems like there is no any message for you",
+                              style: TextStyle(
+                                fontSize: adaptiveScreen.setSp(16),
                               ),
+                              textAlign: TextAlign.center,
                             ),
-                          )
+                          ],
+                        ),
+                      ),
+                    )
                         :
+
                     ///Has data in the collection
                     Positioned(
-                            top: adaptiveScreen.setHeight(170),
-                            left: adaptiveScreen.setWidth(20),
-                            right: adaptiveScreen.setWidth(20),
-                            child: Container(
-                              height: 600,
-                              width: 500,
-                              child: ListView.builder(
-                                itemCount: snapshot.data!.docs.length,
-                                physics: BouncingScrollPhysics(),
-                                itemBuilder: (context, i) {
-                                  return Card(
-                                    elevation: 4,
-                                    child: ListTile(
-                                      title: Text(snapshot
-                                          .data!.docs[i]['message']
-                                          .toString()),
-                                      subtitle: Text(snapshot
-                                          .data!.docs[i]['timeStamp']
-                                          .toString()),
-                                      leading: CircleAvatar(
-                                        radius: 20,
-                                        backgroundImage:
-                                            NetworkImage(user.photoURL!),
-                                      ),
-                                      onLongPress: () {
-                                        deleteTweet(i);
-                                      },
-                                      trailing: IconButton(
-                                        onPressed: () {
-                                          editTweetController.value =
-                                              new TextEditingController
-                                                          .fromValue(
-                                                      new TextEditingValue(
-                                                          text: snapshot
-                                                                  .data!.docs[i]
-                                                              ['message']))
-                                                  .value;
-                                          editTweet(snapshot.data!.docs[i], i);
-                                        },
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.edit,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ),
-                                  );
+                      top: adaptiveScreen.setHeight(170),
+                      left: adaptiveScreen.setWidth(20),
+                      right: adaptiveScreen.setWidth(20),
+                      child: Container(
+                        height: 600,
+                        width: 500,
+                        child: ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, i) {
+                            return Card(
+                              elevation: 4,
+                              child: ListTile(
+                                title: Text(snapshot
+                                    .data!.docs[i]['message']
+                                    .toString()),
+                                subtitle: Text(snapshot
+                                    .data!.docs[i]['timeStamp']
+                                    .toString()),
+                                leading: CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor:AppColors.white,
+                                  backgroundImage:
+                                  NetworkImage(user.photoURL!),
+                                ),
+                                onLongPress: () {
+                                  deleteTweet(i);
                                 },
+                                trailing: IconButton(
+                                  onPressed: () {
+                                    editTweetController.value =
+                                        new TextEditingController
+                                            .fromValue(
+                                            new TextEditingValue(
+                                                text: snapshot
+                                                    .data!.docs[i]
+                                                ['message']))
+                                            .value;
+                                    editTweet(snapshot.data!.docs[i], i);
+                                  },
+                                  icon: FaIcon(
+                                    FontAwesomeIcons.edit,
+                                    size: 20,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                     Positioned(
                       bottom: adaptiveScreen.setHeight(10),
                       right: adaptiveScreen.setWidth(20),
@@ -169,6 +173,7 @@ class _HomeViewState extends BaseViewState {
               }
             }));
   }
+
   /// Add tweet pop up
   viewAddTweet() {
     return showDialog(
@@ -189,7 +194,8 @@ class _HomeViewState extends BaseViewState {
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('Add Tweet',style: textStyles.commonTextStyle(),),
+                      child: Text(
+                        'Add Tweet', style: textStyles.commonTextStyle(),),
                     ),
                   ),
                   Divider(
@@ -201,7 +207,7 @@ class _HomeViewState extends BaseViewState {
                         left: adaptiveScreen.setHeight(20),
                         right: adaptiveScreen.setHeight(10)),
                     child: Form(
-                      key:addTweetKey,
+                      key: addTweetKey,
                       child: TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: addTweetController,
@@ -209,12 +215,13 @@ class _HomeViewState extends BaseViewState {
                           hintText: "Please enter your tweet",
                           border: InputBorder.none,
                         ),
-                        validator: (value){
-                          if(value!.isEmpty){
+                        validator: (value) {
+                          if (value!.isEmpty) {
                             return 'Empty value can not be accepted';
-                          }if(value.length>280){
-                            return' Max length is 280 characters';
-                          }else{
+                          }
+                          if (value.length > 280) {
+                            return ' Max length is 280 characters';
+                          } else {
                             return null;
                           }
                         },
@@ -226,8 +233,8 @@ class _HomeViewState extends BaseViewState {
                   InkWell(
                     child: Container(
                       margin: EdgeInsets.only(
-                          top: adaptiveScreen.setHeight(10),
-                         ),
+                        top: adaptiveScreen.setHeight(10),
+                      ),
                       padding: EdgeInsets.all(
                           adaptiveScreen.setHeight(20)),
                       decoration: BoxDecoration(
@@ -237,23 +244,24 @@ class _HomeViewState extends BaseViewState {
                       ),
                       child: Text(
                         "Add Tweet",
-                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
                     ),
                     onTap: () {
                       /// Adding tweet to the collection
-                     if(addTweetKey.currentState!.validate()){
+                      if (addTweetKey.currentState!.validate()) {
                         addTweetToFirestore(
                             addTweetController.text.toString().trim());
                         Navigator.pop(context);
-                      }else {
-                       ScaffoldMessenger(
+                      } else {
+                        ScaffoldMessenger(
                           child: SnackBar(
                             content: Text('Something is wrong'),
                           ),
-                       );
-                     }
+                        );
+                      }
                     },
                   ),
                 ],
@@ -262,6 +270,7 @@ class _HomeViewState extends BaseViewState {
           );
         });
   }
+
   /// Editing tweets
   editTweet(QueryDocumentSnapshot<Object?> doc, int i) {
     return showDialog(
@@ -282,7 +291,8 @@ class _HomeViewState extends BaseViewState {
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('Edit Tweet',style: textStyles.commonTextStyle(),),
+                      child: Text(
+                        'Edit Tweet', style: textStyles.commonTextStyle(),),
                     ),
                   ),
                   Divider(
@@ -300,12 +310,13 @@ class _HomeViewState extends BaseViewState {
                         hintText: "",
                         border: InputBorder.none,
                       ),
-                      validator: (value){
-                        if(value!.isEmpty){
+                      validator: (value) {
+                        if (value!.isEmpty) {
                           return 'Empty value can not be accepted';
-                        }if(value.length>280){
-                          return' Max length is 280 characters';
-                        }else{
+                        }
+                        if (value.length > 280) {
+                          return ' Max length is 280 characters';
+                        } else {
                           return null;
                         }
                       },
@@ -327,17 +338,18 @@ class _HomeViewState extends BaseViewState {
                       ),
                       child: Text(
                         "Edit Tweet",
-                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
                     ),
                     onTap: () {
                       /// Editing tweet inside the collection
-                      if(editTweetKey.currentState!.validate()) {
+                      if (editTweetKey.currentState!.validate()) {
                         editTweetToFirestore(
                             editTweetController.text.toString().trim(), i);
                         Navigator.pop(context);
-                      }else {
+                      } else {
                         ScaffoldMessenger(
                           child: SnackBar(
                             content: Text('Something is wrong'),
@@ -356,7 +368,7 @@ class _HomeViewState extends BaseViewState {
   /// Adding to the collection method
   /// params String [tweet]
   void addTweetToFirestore(String tweet) async {
-    try{
+    try {
       String timeStamp = getTime();
       Map<String, dynamic> data = {
         'message': tweet,
@@ -367,7 +379,7 @@ class _HomeViewState extends BaseViewState {
       await collectionReference.doc(id.toString()).set(data);
       ++id;
       await sharedData.setData(ID, id.toString());
-    }catch(e){
+    } catch (e) {
       print(ADD_COLLECTION_TAG + e.toString());
     }
   }
@@ -375,37 +387,37 @@ class _HomeViewState extends BaseViewState {
   /// Edit tweet in the collection
   /// params String [tweet] and  int [collection_id]
   void editTweetToFirestore(String tweet, int i) async {
-  try{
-    String timeStamp = getTime();
-    Map<String, dynamic> data = {
-      'message': tweet,
-      'timeStamp': timeStamp
-    };
-    CollectionReference collectionReference =
-    FirebaseFirestore.instance.collection('tweets');
-    QuerySnapshot querySnapshot = await collectionReference.get();
-    querySnapshot.docs[i].reference.update(data);
-  }catch (e){
-    print(EDIT_COLLECTION_TAG + e.toString());
-  }
+    try {
+      String timeStamp = getTime();
+      Map<String, dynamic> data = {
+        'message': tweet,
+        'timeStamp': timeStamp
+      };
+      CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('tweets');
+      QuerySnapshot querySnapshot = await collectionReference.get();
+      querySnapshot.docs[i].reference.update(data);
+    } catch (e) {
+      print(EDIT_COLLECTION_TAG + e.toString());
+    }
   }
 
   /// Delete tweet from the collection
   /// params int [collection_id]
   void deleteTweet(int i) async {
-   try{
-     CollectionReference collectionReference =
-     FirebaseFirestore.instance.collection('tweets');
-     QuerySnapshot querySnapshot = await collectionReference.get();
-     querySnapshot.docs[i].reference.delete();
-   }catch(e){
-    print(DELETE_COLLECTION_TAG + e.toString());
-   }
+    try {
+      CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('tweets');
+      QuerySnapshot querySnapshot = await collectionReference.get();
+      querySnapshot.docs[i].reference.delete();
+    } catch (e) {
+      print(DELETE_COLLECTION_TAG + e.toString());
+    }
   }
 
   /// Fetching all the data from the collection
   fetchTweets() {
-    try{
+    try {
       CollectionReference collectionReference =
       FirebaseFirestore.instance.collection('tweets');
       collectionReference.snapshots().listen((snapshot) {
@@ -415,14 +427,14 @@ class _HomeViewState extends BaseViewState {
           print(tweets);
         });
       });
-    }catch (e){
+    } catch (e) {
       print(FETCH_COLLECTION_TAG + e.toString());
     }
   }
 
- /// Getting the existing id of the current object
+  /// Getting the existing id of the current object
   void getIdFromShared() async {
-    id = int.parse(sharedData.getData(ID)??"0");
+    id = int.parse(sharedData.getData(ID) ?? "0");
   }
 
   /// Formatting the date to [22-07-2021 12:12 a.m] format
