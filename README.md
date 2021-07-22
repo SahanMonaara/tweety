@@ -29,7 +29,7 @@ In the terminal run these codes to run the application on your connected device.
 
 To build a debug release please run the below code on the terminal
 
-### `flutter build `
+### `flutter build apk`
 
 ## How to delete a Tweet
 
