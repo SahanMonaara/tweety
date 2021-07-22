@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:tweety/configurations/app_shared_data.dart';
 import 'package:tweety/screens/common_components/background/common_background_component.dart';
 import 'package:tweety/utils/app_colors.dart';
+import 'package:tweety/utils/app_constants.dart';
 import 'package:tweety/utils/app_images.dart';
 import 'package:tweety/utils/injection_container.dart';
 
@@ -19,16 +20,21 @@ class HomeView extends BaseView {
 int id = 0;
 
 class _HomeViewState extends BaseViewState {
+
+  ///Firebase current user object
   final user = FirebaseAuth.instance.currentUser!;
+
   ///Text editors
   TextEditingController addTweetController = TextEditingController();
   TextEditingController editTweetController = TextEditingController();
+
   ///Shared preference
   final sharedData = sl<AppSharedData>();
+
   /// Global Keys
   GlobalKey<FormState> addTweetKey = GlobalKey();
   GlobalKey<FormState> editTweetKey = GlobalKey();
-  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -37,9 +43,13 @@ class _HomeViewState extends BaseViewState {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
         body: StreamBuilder(
             ///Listening the collection
             stream: FirebaseFirestore.instance.collection('tweets').snapshots(),
@@ -238,10 +248,10 @@ class _HomeViewState extends BaseViewState {
                             addTweetController.text.toString().trim());
                         Navigator.pop(context);
                       }else {
-                       _scaffoldKey.currentState!.showSnackBar(
-                         SnackBar(
-                           content: Text('Something is wrong'),
-                         ),
+                       ScaffoldMessenger(
+                          child: SnackBar(
+                            content: Text('Something is wrong'),
+                          ),
                        );
                      }
                     },
@@ -328,10 +338,10 @@ class _HomeViewState extends BaseViewState {
                             editTweetController.text.toString().trim(), i);
                         Navigator.pop(context);
                       }else {
-                        _scaffoldKey.currentState!.showSnackBar(
-                          SnackBar(
-                              content: Text('Something is wrong'),
-                              ),
+                        ScaffoldMessenger(
+                          child: SnackBar(
+                            content: Text('Something is wrong'),
+                          ),
                         );
                       }
                     },
@@ -346,52 +356,68 @@ class _HomeViewState extends BaseViewState {
   /// Adding to the collection method
   /// params String [tweet]
   void addTweetToFirestore(String tweet) async {
-    String timeStamp = getTime();
-    Map<String, dynamic> data = {
-      'message': tweet,
-      'timeStamp': timeStamp
-    };
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection('tweets');
-    await collectionReference.doc(id.toString()).set(data);
-    ++id;
-    await sharedData.setData(ID, id.toString());
+    try{
+      String timeStamp = getTime();
+      Map<String, dynamic> data = {
+        'message': tweet,
+        'timeStamp': timeStamp
+      };
+      CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('tweets');
+      await collectionReference.doc(id.toString()).set(data);
+      ++id;
+      await sharedData.setData(ID, id.toString());
+    }catch(e){
+      print(ADD_COLLECTION_TAG + e.toString());
+    }
   }
 
   /// Edit tweet in the collection
   /// params String [tweet] and  int [collection_id]
   void editTweetToFirestore(String tweet, int i) async {
+  try{
     String timeStamp = getTime();
     Map<String, dynamic> data = {
       'message': tweet,
       'timeStamp': timeStamp
     };
     CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection('tweets');
+    FirebaseFirestore.instance.collection('tweets');
     QuerySnapshot querySnapshot = await collectionReference.get();
     querySnapshot.docs[i].reference.update(data);
+  }catch (e){
+    print(EDIT_COLLECTION_TAG + e.toString());
+  }
   }
 
   /// Delete tweet from the collection
   /// params int [collection_id]
   void deleteTweet(int i) async {
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection('tweets');
-    QuerySnapshot querySnapshot = await collectionReference.get();
-    querySnapshot.docs[i].reference.delete();
+   try{
+     CollectionReference collectionReference =
+     FirebaseFirestore.instance.collection('tweets');
+     QuerySnapshot querySnapshot = await collectionReference.get();
+     querySnapshot.docs[i].reference.delete();
+   }catch(e){
+    print(DELETE_COLLECTION_TAG + e.toString());
+   }
   }
 
   /// Fetching all the data from the collection
   fetchTweets() {
-    CollectionReference collectionReference =
-        FirebaseFirestore.instance.collection('tweets');
-    collectionReference.snapshots().listen((snapshot) {
-      List tweets;
-      setState(() {
-        tweets = snapshot.docs;
-        print(tweets);
+    try{
+      CollectionReference collectionReference =
+      FirebaseFirestore.instance.collection('tweets');
+      collectionReference.snapshots().listen((snapshot) {
+        List tweets;
+        setState(() {
+          tweets = snapshot.docs;
+          print(tweets);
+        });
       });
-    });
+    }catch (e){
+      print(FETCH_COLLECTION_TAG + e.toString());
+    }
   }
 
  /// Getting the existing id of the current object

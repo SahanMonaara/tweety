@@ -90,7 +90,7 @@ class _CommonBackgroundComponentState extends State<CommonBackgroundComponent> {
                         final provider = Provider.of<GoogleSignInProvider>(
                             context,
                             listen: false);
-                        provider.Logout();
+                        provider.logout();
                       },
                       child: Text('Sign Out',style: style.commonTextStyle(),),
                     ),

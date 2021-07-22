@@ -7,8 +7,12 @@ const String GIF_IMAGE_PATH = 'assets/gif/';
 const String SVG_TYPE = '.svg';
 const String PNG_TYPE = '.png';
 const String JPG_TYPE = '.jpg';
+const String EDIT_COLLECTION_TAG = 'EDIT_COLLECTION_ERROR => ';
+const String ADD_COLLECTION_TAG = 'ADD_COLLECTION_ERROR => ';
+const String DELETE_COLLECTION_TAG = 'EDIT_COLLECTION_ERROR => ';
+const String FETCH_COLLECTION_TAG = 'FETCH_COLLECTION_ERROR => ';
+const String FIREBASE_ERROR = 'FIREBASE_ERROR => ';
 
 class AppConstants {
-  static String appVersion = '1.00.00';
   static final ScreenUtil adaptiveScreen = ScreenUtil();
 }

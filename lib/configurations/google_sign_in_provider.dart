@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tweety/utils/app_constants.dart';
 import 'package:tweety/utils/injection_container.dart';
 
 import 'app_shared_data.dart';
@@ -31,19 +32,19 @@ Future googleLogin() async{
    await FirebaseAuth.instance.signInWithCredential(credentials);
    notifyListeners();
  }catch (e){
-   print(e.toString());
+   print(FIREBASE_ERROR + e.toString());
  }
 }
 
 /// Sign out from google
-Future Logout() async{
-  await sharedData.clearData(ID);
-  await googleSignIn.disconnect();
-  FirebaseAuth.instance.signOut();
+Future logout() async{
+  try{
+    await sharedData.clearData(ID);
+    await googleSignIn.disconnect();
+    FirebaseAuth.instance.signOut();
+  }catch(e){
+    print(FIREBASE_ERROR + e.toString());
+  }
 
 }
-
-
-
-
 }
