@@ -20,20 +20,28 @@ int id = 0;
 
 class _HomeViewState extends BaseViewState {
   final user = FirebaseAuth.instance.currentUser!;
+  ///Text editors
   TextEditingController addTweetController = TextEditingController();
   TextEditingController editTweetController = TextEditingController();
+  ///Shared preference
   final sharedData = sl<AppSharedData>();
-
+  /// Global Keys
+  GlobalKey<FormState> addTweetKey = GlobalKey();
+  GlobalKey<FormState> editTweetKey = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
+    /// Get the existing ID of the collection
     getIdFromShared();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         body: StreamBuilder(
+            ///Listening the collection
             stream: FirebaseFirestore.instance.collection('tweets').snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -46,6 +54,7 @@ class _HomeViewState extends BaseViewState {
                   child: Text('Something is Wrong!!'),
                 );
               } else if (snapshot.hasData) {
+
                 return CommonBackgroundComponent(
                   bottomSheetHeight: 780,
                   profile: true,
@@ -54,6 +63,7 @@ class _HomeViewState extends BaseViewState {
                   email: user.email!,
                   children: [
                     snapshot.data!.docs.length == 0
+                    ///No data in the collection
                         ? Positioned(
                             top: adaptiveScreen.setHeight(300),
                             child: Container(
@@ -75,7 +85,9 @@ class _HomeViewState extends BaseViewState {
                               ),
                             ),
                           )
-                        : Positioned(
+                        :
+                    ///Has data in the collection
+                    Positioned(
                             top: adaptiveScreen.setHeight(170),
                             left: adaptiveScreen.setWidth(20),
                             right: adaptiveScreen.setWidth(20),
@@ -131,6 +143,7 @@ class _HomeViewState extends BaseViewState {
                       right: adaptiveScreen.setWidth(20),
                       child: FloatingActionButton(
                         onPressed: () {
+                          ///Viewing add tweet pop up
                           viewAddTweet();
                         },
                         backgroundColor: AppColors.primaryButtonBackgroundColor,
@@ -146,7 +159,7 @@ class _HomeViewState extends BaseViewState {
               }
             }));
   }
-
+  /// Add tweet pop up
   viewAddTweet() {
     return showDialog(
         context: context,
@@ -177,14 +190,27 @@ class _HomeViewState extends BaseViewState {
                     padding: EdgeInsets.only(
                         left: adaptiveScreen.setHeight(20),
                         right: adaptiveScreen.setHeight(10)),
-                    child: TextFormField(
-                      controller: addTweetController,
-                      decoration: InputDecoration(
-                        hintText: "Please enter your tweet",
-                        border: InputBorder.none,
+                    child: Form(
+                      key:addTweetKey,
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: addTweetController,
+                        decoration: InputDecoration(
+                          hintText: "Please enter your tweet",
+                          border: InputBorder.none,
+                        ),
+                        validator: (value){
+                          if(value!.isEmpty){
+                            return 'Empty value can not be accepted';
+                          }if(value.length>280){
+                            return' Max length is 280 characters';
+                          }else{
+                            return null;
+                          }
+                        },
+                        maxLines: 10,
+                        maxLength: 280,
                       ),
-                      maxLines: 10,
-                      maxLength: 280,
                     ),
                   ),
                   InkWell(
@@ -206,9 +232,18 @@ class _HomeViewState extends BaseViewState {
                       ),
                     ),
                     onTap: () {
-                      addTweetToFirestore(
-                          addTweetController.text.toString().trim());
-                      Navigator.pop(context);
+                      /// Adding tweet to the collection
+                     if(addTweetKey.currentState!.validate()){
+                        addTweetToFirestore(
+                            addTweetController.text.toString().trim());
+                        Navigator.pop(context);
+                      }else {
+                       _scaffoldKey.currentState!.showSnackBar(
+                         SnackBar(
+                           content: Text('Something is wrong'),
+                         ),
+                       );
+                     }
                     },
                   ),
                 ],
@@ -217,7 +252,7 @@ class _HomeViewState extends BaseViewState {
           );
         });
   }
-
+  /// Editing tweets
   editTweet(QueryDocumentSnapshot<Object?> doc, int i) {
     return showDialog(
         context: context,
@@ -249,11 +284,21 @@ class _HomeViewState extends BaseViewState {
                         left: adaptiveScreen.setHeight(20),
                         right: adaptiveScreen.setHeight(10)),
                     child: TextFormField(
+                      autovalidateMode: AutovalidateMode.always,
                       controller: editTweetController,
                       decoration: InputDecoration(
                         hintText: "",
                         border: InputBorder.none,
                       ),
+                      validator: (value){
+                        if(value!.isEmpty){
+                          return 'Empty value can not be accepted';
+                        }if(value.length>280){
+                          return' Max length is 280 characters';
+                        }else{
+                          return null;
+                        }
+                      },
                       maxLines: 10,
                       maxLength: 280,
                     ),
@@ -277,9 +322,18 @@ class _HomeViewState extends BaseViewState {
                       ),
                     ),
                     onTap: () {
-                      editTweetToFirestore(
-                          editTweetController.text.toString().trim(), i);
-                      Navigator.pop(context);
+                      /// Editing tweet inside the collection
+                      if(editTweetKey.currentState!.validate()) {
+                        editTweetToFirestore(
+                            editTweetController.text.toString().trim(), i);
+                        Navigator.pop(context);
+                      }else {
+                        _scaffoldKey.currentState!.showSnackBar(
+                          SnackBar(
+                              content: Text('Something is wrong'),
+                              ),
+                        );
+                      }
                     },
                   ),
                 ],
@@ -289,6 +343,8 @@ class _HomeViewState extends BaseViewState {
         });
   }
 
+  /// Adding to the collection method
+  /// params String [tweet]
   void addTweetToFirestore(String tweet) async {
     String timeStamp = getTime();
     Map<String, dynamic> data = {
@@ -302,6 +358,8 @@ class _HomeViewState extends BaseViewState {
     await sharedData.setData(ID, id.toString());
   }
 
+  /// Edit tweet in the collection
+  /// params String [tweet] and  int [collection_id]
   void editTweetToFirestore(String tweet, int i) async {
     String timeStamp = getTime();
     Map<String, dynamic> data = {
@@ -314,6 +372,8 @@ class _HomeViewState extends BaseViewState {
     querySnapshot.docs[i].reference.update(data);
   }
 
+  /// Delete tweet from the collection
+  /// params int [collection_id]
   void deleteTweet(int i) async {
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection('tweets');
@@ -321,6 +381,7 @@ class _HomeViewState extends BaseViewState {
     querySnapshot.docs[i].reference.delete();
   }
 
+  /// Fetching all the data from the collection
   fetchTweets() {
     CollectionReference collectionReference =
         FirebaseFirestore.instance.collection('tweets');
@@ -333,12 +394,15 @@ class _HomeViewState extends BaseViewState {
     });
   }
 
+ /// Getting the existing id of the current object
   void getIdFromShared() async {
     id = int.parse(sharedData.getData(ID)??"0");
   }
 
+  /// Formatting the date to [22-07-2021 12:12 a.m] format
   String getTime() {
     final timeStampFormatter = new DateFormat('dd-MM-yyyy hh:mm a');
     return timeStampFormatter.format(DateTime.now());
   }
+
 }

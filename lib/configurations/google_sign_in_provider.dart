@@ -29,13 +29,13 @@ Future googleLogin() async{
    );
 
    await FirebaseAuth.instance.signInWithCredential(credentials);
-
    notifyListeners();
  }catch (e){
    print(e.toString());
  }
 }
 
+/// Sign out from google
 Future Logout() async{
   await sharedData.clearData(ID);
   await googleSignIn.disconnect();
