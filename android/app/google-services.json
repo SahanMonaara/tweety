@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "79537467346",
+    "project_id": "tweety-ca816",
+    "storage_bucket": "tweety-ca816.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79537467346:android:4068d0b004c3264b38220b",
+        "android_client_info": {
+          "package_name": "com.example.tweety"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79537467346-3dr5n9d8q36kon3hu6vmv8599cjifvqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tweety",
+            "certificate_hash": "18c7de74de47bcbf8a888952941f88edc53d59b1"
+          }
+        },
+        {
+          "client_id": "79537467346-dga9jlgubr32u97n1cifbf3heck2oesb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ-ZdUaDlw-TDOHOH9uivGGxxU4ueHJ9E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79537467346-dga9jlgubr32u97n1cifbf3heck2oesb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
