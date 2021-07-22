@@ -68,15 +68,8 @@ User can delete a tweet by long pressing on a single tweet.
 
 
 ## Screenshots
+| <img src="https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.28.26.png"  width="200" height="400"> |<img src="https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.28.48.png"  width="200" height="400"> |
+| <img src="https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.30.05.png"  width="200" height="400">|
 
-![alt text](https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.28.26.png?raw=true)
-
-![alt text](https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.28.48.png?raw=true)
-
-![alt text](https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.30.05.png?raw=true)
-
-![alt text](https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.29.08.png?raw=true)
-
-![alt text](https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.29.19.png?raw=true)
-
-![alt text](https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.29.43.png?raw=true)
+<img src="https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.29.08.png"  width="200" height="400">|
+| <img src="https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.29.19.png"  width="200" height="400"> | <img src="https://github.com/SahanMonaara/tweety/blob/main/screenshots/Screenshot%202021-07-22%20at%2009.29.43.png"  width="200" height="400">|
