@@ -378,9 +378,9 @@ class _HomeViewState extends BaseViewState {
       FirebaseFirestore.instance.collection('tweets');
       await collectionReference.doc(id.toString()).set(data);
       ++id;
-      await sharedData.setData(ID, id.toString());
+      await sharedData.setData("ID", id.toString());
     } catch (e) {
-      print(ADD_COLLECTION_TAG + e.toString());
+      print("ADD_COLLECTION_TAG" + e.toString());
     }
   }
 
@@ -398,7 +398,7 @@ class _HomeViewState extends BaseViewState {
       QuerySnapshot querySnapshot = await collectionReference.get();
       querySnapshot.docs[i].reference.update(data);
     } catch (e) {
-      print(EDIT_COLLECTION_TAG + e.toString());
+      print("EDIT_COLLECTION_TAG" + e.toString());
     }
   }
 
@@ -411,7 +411,7 @@ class _HomeViewState extends BaseViewState {
       QuerySnapshot querySnapshot = await collectionReference.get();
       querySnapshot.docs[i].reference.delete();
     } catch (e) {
-      print(DELETE_COLLECTION_TAG + e.toString());
+      print("DELETE_COLLECTION_TAG" + e.toString());
     }
   }
 
@@ -428,13 +428,13 @@ class _HomeViewState extends BaseViewState {
         });
       });
     } catch (e) {
-      print(FETCH_COLLECTION_TAG + e.toString());
+      print("FETCH_COLLECTION_TAG" + e.toString());
     }
   }
 
   /// Getting the existing id of the current object
   void getIdFromShared() async {
-    id = int.parse(sharedData.getData(ID) ?? "0");
+    id = int.parse(sharedData.getData("ID") ?? "0");
   }
 
   /// Formatting the date to [22-07-2021 12:12 a.m] format

@@ -1,0 +1,1 @@
+enum Flavor { DEV, UAT, QA, PRODUCTION }

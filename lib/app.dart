@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           primaryColor: AppColors.primaryBackgroundColor,
           accentColor: AppColors.primaryBackgroundColor,
           highlightColor: AppColors.primaryButtonBackgroundColor,
-          unselectedWidgetColor: AppColors.white,
+          unselectedWidgetColor: AppColors.primaryTextColor,
         ),
       ));
 }

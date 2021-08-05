@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-const ID = 'ID';
+const FCM_TOKEN = 'FCM_TOKEN';
 
 class AppSharedData {
   final SharedPreferences prefs;

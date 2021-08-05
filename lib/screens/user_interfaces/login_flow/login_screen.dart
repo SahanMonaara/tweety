@@ -107,7 +107,7 @@ class _LoginViewState extends BaseViewState {
                 child: Container(
                   width: adaptiveScreen.setWidth(428),
                   child: Text(
-                    "This is a testing application for an assignment\nplease feel free to contact me on sahanmonaara2015@gmail.com",
+                    "This is a testing application \nplease feel free to contact me on sahanmonaara2015@gmail.com",
                     style: TextStyle(
                       fontSize: adaptiveScreen.setSp(12),
                     ),

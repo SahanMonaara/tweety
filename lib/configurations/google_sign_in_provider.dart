@@ -32,18 +32,18 @@ Future googleLogin() async{
    await FirebaseAuth.instance.signInWithCredential(credentials);
    notifyListeners();
  }catch (e){
-   print(FIREBASE_ERROR + e.toString());
+   print("FIREBASE_ERROR" + e.toString());
  }
 }
 
 /// Sign out from google
 Future logout() async{
   try{
-    await sharedData.clearData(ID);
+    await sharedData.clearData("ID");
     await googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
   }catch(e){
-    print(FIREBASE_ERROR + e.toString());
+    print("FIREBASE_ERROR" + e.toString());
   }
 
 }

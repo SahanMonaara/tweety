@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:after_init/after_init.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tweety/utils/app_text_styles.dart';
