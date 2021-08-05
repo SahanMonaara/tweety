@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:tweety/app.dart';
@@ -13,15 +14,20 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 void main() async {
+  ///Initiate dependency injection
+  await di.init();
+  ///Initiate firebase
+  await Firebase.initializeApp();
+  ///Enable crashlytics
+  _enableCrashlytics();
+
   FlavorConfig(
       flavor: Flavor.UAT,
       name: "uat",
       color: AppColors.primaryBackgroundColor,
-      values: FlavorValues(baseUrl: ''));
+      values: FlavorValues(baseUrl: 'https://test_uat.com/'));
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await di.init();
-  await Firebase.initializeApp();
   StringUtils.getApplicationVersion();
   runApp(
     GestureDetector(
@@ -29,4 +35,14 @@ void main() async {
       child: MyApp(),
     ),
   );
+}
+Future<void> _enableCrashlytics() async {
+  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  /// Pass all uncaught errors to Crashlytics.
+  Function originalOnError = FlutterError.onError as Function;
+  FlutterError.onError = (FlutterErrorDetails errorDetails) async {
+    await FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+    /// Forward to original handler.
+    originalOnError(errorDetails);
+  };
 }

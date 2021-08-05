@@ -15,16 +15,19 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 void main() async {
+  ///Initiate dependency injection
+  await di.init();
+  ///Initiate firebase
+  await Firebase.initializeApp();
+  ///Enable crashlytics
+  _enableCrashlytics();
   FlavorConfig(
       flavor: Flavor.QA,
       name: "qa",
       color: AppColors.primaryBackgroundColor,
-      values: FlavorValues(baseUrl: ''));
+      values: FlavorValues(baseUrl: 'https://test_qa.com/'));
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await di.init();
-  await Firebase.initializeApp();
-  _enableCrashlytics();
   StringUtils.getApplicationVersion();
   runApp(
     GestureDetector(

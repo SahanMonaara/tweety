@@ -70,7 +70,7 @@ class ApiHelper {
 
   Future<Response> delete(String url) async {
     try {
-      Response response = await baseAPI.delete(url);
+      Response response = await dio.delete(url);
       return response;
     } on DioError catch(e) {
       // Handle error
