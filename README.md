@@ -15,6 +15,9 @@ These are the version for development that has been used.
 |Flutter.        |**2.2.3**                     |
 |Dart            |**2.13.4**                    |
 
+## Technologies & Language
+
+Flutter, Firebase and Dart
 
 ## How to deploy
 
