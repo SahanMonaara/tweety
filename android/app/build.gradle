@@ -28,6 +28,29 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 
 android {
+    flavorDimensions "flutter-flavor"
+
+    productFlavors {
+        dev {
+            dimension "flutter-flavor"
+            applicationId "com.example.tweety"
+            resValue "string", "app_name", "tweety"
+        }
+        qa {
+            dimension "flutter-flavor"
+            applicationId "com.example.tweety"
+            resValue "string", "app_name", "tweety"
+        }
+        uat {
+            dimension "flutter-flavor"
+            applicationId "com.example.tweety"
+            resValue "string", "app_name", "tweety"
+        }
+        prod {
+            dimension "flutter-flavor"
+            applicationId "com.example.tweety"
+            resValue "string", "app_name", "tweety"
+        }
     compileSdkVersion 30
 
     sourceSets {

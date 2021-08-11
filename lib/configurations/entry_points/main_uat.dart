@@ -2,7 +2,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:tweety/app.dart';
-import 'package:tweety/configurations/flavor_configurations.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:tweety/utils/app_colors.dart';
 import 'package:tweety/utils/enums.dart';
 import 'package:tweety/utils/injection_container.dart' as di;
@@ -14,6 +14,18 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 void main() async {
+  Flavor flavor = FlavorConfig.instance.variables['flavor'];
+  flavor = Flavor.UAT;
+  FlavorConfig(
+      name: 'uat',
+      color: Colors.amber,
+      location: BannerLocation.topStart,
+      variables: {
+        'baseUrl': 'https://test_uat.com/',
+        'flavor': flavor,
+      });
+  WidgetsFlutterBinding.ensureInitialized();
+
   ///Initiate dependency injection
   await di.init();
   ///Initiate firebase
@@ -21,12 +33,6 @@ void main() async {
   ///Enable crashlytics
   _enableCrashlytics();
 
-  FlavorConfig(
-      flavor: Flavor.UAT,
-      name: "uat",
-      color: AppColors.primaryBackgroundColor,
-      values: FlavorValues(baseUrl: 'https://test_uat.com/'));
-  WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   StringUtils.getApplicationVersion();
   runApp(

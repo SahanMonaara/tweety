@@ -76,6 +76,8 @@ dependencies:
   equatable: ^2.0.3
   #progress dialog
   progress_dialog: ^1.2.4
+  #automated flavor configuration
+  flutter_flavor: ^3.0.3
 
 dev_dependencies:
   flutter_test:
@@ -126,3 +128,37 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_flavor:
+  dimensions:
+    android: "flutter-flavor"
+    ios: "flutter-flavor"
+
+  flavors:
+    dev:
+      android:
+        name: "tweety"
+        applicationId: "com.example.tweety"
+      ios:
+        name: "tweety"
+        bundleId: "com.example.tweety"
+    qa:
+      android:
+        name: "tweety"
+        applicationId: "com.example.tweety"
+      ios:
+        name: "tweety"
+        bundleId: "com.example.tweety"
+    uat:
+      android:
+        name: "tweety"
+        applicationId: "com.example.tweety"
+      ios:
+        name: "tweety"
+        bundleId: "com.example.tweety"
+    prod:
+      android:
+        name: "tweety"
+        applicationId: "com.example.tweety"
+      ios:
+        name: "tweety"
+        bundleId: "com.example.tweety"
