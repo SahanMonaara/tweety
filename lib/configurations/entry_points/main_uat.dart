@@ -3,7 +3,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:tweety/app.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
-import 'package:tweety/utils/app_colors.dart';
 import 'package:tweety/utils/enums.dart';
 import 'package:tweety/utils/injection_container.dart' as di;
 import 'package:firebase_core/firebase_core.dart';

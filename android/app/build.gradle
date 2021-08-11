@@ -51,6 +51,7 @@ android {
             applicationId "com.example.tweety"
             resValue "string", "app_name", "tweety"
         }
+    }
     compileSdkVersion 30
 
     sourceSets {
