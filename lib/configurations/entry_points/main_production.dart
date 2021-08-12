@@ -36,7 +36,7 @@ void main() async {
   runApp(
     GestureDetector(
       behavior: HitTestBehavior.translucent,
-      child: MyApp(),
+      child: FlavorBanner(child: MyApp()),
     ),
   );
 }

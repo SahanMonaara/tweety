@@ -17,7 +17,7 @@ void main() async {
   flavor = Flavor.UAT;
   FlavorConfig(
       name: 'uat',
-      color: Colors.amber,
+      color: Colors.green,
       location: BannerLocation.topStart,
       variables: {
         'baseUrl': 'https://test_uat.com/',

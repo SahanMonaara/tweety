@@ -345,7 +345,7 @@ class _HomeViewState extends BaseViewState {
                     ),
                     onTap: () {
                       /// Editing tweet inside the collection
-                      if (editTweetKey.currentState!.validate()) {
+                      if (editTweetController.text.isNotEmpty) {
                         editTweetToFirestore(
                             editTweetController.text.toString().trim(), i);
                         Navigator.pop(context);

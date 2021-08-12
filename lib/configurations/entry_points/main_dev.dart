@@ -27,8 +27,10 @@ void main() async {
 
   ///Initiate dependency injection
   await di.init();
+
   ///Initiate firebase
   await Firebase.initializeApp();
+
   ///Enable crashlytics
   _enableCrashlytics();
 
@@ -37,16 +39,21 @@ void main() async {
   runApp(
     GestureDetector(
       behavior: HitTestBehavior.translucent,
-      child: MyApp(),
+      child: FlavorBanner(
+          child: MyApp()
+      ),
     ),
   );
 }
+
 Future<void> _enableCrashlytics() async {
   await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+
   /// Pass all uncaught errors to Crashlytics.
   Function originalOnError = FlutterError.onError as Function;
   FlutterError.onError = (FlutterErrorDetails errorDetails) async {
     await FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+
     /// Forward to original handler.
     originalOnError(errorDetails);
   };
