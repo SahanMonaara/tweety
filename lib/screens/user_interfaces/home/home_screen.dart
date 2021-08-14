@@ -96,10 +96,14 @@ class _HomeViewState extends BaseViewState {
                           ],
                         ),
                       ),
-                    )
-                        :
+                    ) :
 
                     ///Has data in the collection
+                    Positioned(
+                        top: adaptiveScreen.setHeight(160),
+                        left: adaptiveScreen.setWidth(165),
+                        right: adaptiveScreen.setWidth(20),
+                        child: Text("My Tweets",style: textStyles.commonTextStyle(),)),
                     Positioned(
                       top: adaptiveScreen.setHeight(170),
                       left: adaptiveScreen.setWidth(20),
@@ -231,22 +235,26 @@ class _HomeViewState extends BaseViewState {
                     ),
                   ),
                   InkWell(
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        top: adaptiveScreen.setHeight(10),
-                      ),
-                      padding: EdgeInsets.all(
-                          adaptiveScreen.setHeight(20)),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryBackgroundColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(adaptiveScreen.setHeight(30)),),
-                      ),
-                      child: Text(
-                        "Add Tweet",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(adaptiveScreen.setHeight(30)),),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: adaptiveScreen.setHeight(10),
+                        ),
+                        padding: EdgeInsets.all(
+                            adaptiveScreen.setHeight(20)),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryButtonBackgroundColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(adaptiveScreen.setHeight(30)),),
+                        ),
+                        child: Text(
+                          "Add Tweet",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                     onTap: () {
@@ -325,6 +333,7 @@ class _HomeViewState extends BaseViewState {
                     ),
                   ),
                   InkWell(
+                    hoverColor: Colors.transparent,
                     child: Container(
                       margin: EdgeInsets.only(
                         top: adaptiveScreen.setHeight(10),
@@ -332,7 +341,7 @@ class _HomeViewState extends BaseViewState {
                       padding: EdgeInsets.all(
                           adaptiveScreen.setHeight(20)),
                       decoration: BoxDecoration(
-                        color: AppColors.primaryBackgroundColor,
+                        color: AppColors.primaryButtonBackgroundColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(adaptiveScreen.setHeight(30)),),
                       ),
