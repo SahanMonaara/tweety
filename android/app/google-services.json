@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "79537467346-m4rk7t9lbvftbreeifl7t54bspe1ibha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tweety",
+            "certificate_hash": "36296e5ef3a701306e16cbd4c0a0d377ebf4fe08"
+          }
+        },
+        {
           "client_id": "79537467346-dga9jlgubr32u97n1cifbf3heck2oesb.apps.googleusercontent.com",
           "client_type": 3
         }
